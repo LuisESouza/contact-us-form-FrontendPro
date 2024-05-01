@@ -1,8 +1,12 @@
 <script setup>
     import MessageForm from "./MessageForm.vue";
     import { ref } from "vue";
+    import axios from 'axios';
+
 
     const ACCESS_KEY = "543c4711-7969-4d93-9ce3-d582a76282b4";
+    const apiUrl = `https://api.web3forms.com/submit`;
+
     const name = ref("");
     const email = ref("");
     const subject = ref("");
@@ -14,25 +18,22 @@
             return;
         }
 
-        const response = await fetch("https://api.web3forms.com/submit", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json",
-            },
-            body: JSON.stringify({
+        try{
+            const response = await axios.post(apiUrl, {
                 access_key: ACCESS_KEY,
                 name: name,
                 email: email,
                 subject: subject,
                 message: message,
-            }),
-        });
+            });
 
-        const result = await response.json();
-        if (result.success) {
-            alert("Email sent successfully!");
-            console.log(result);
+            if (response.data.success) {
+                alert("Email sent successfully!");
+                console.log(response);
+            }
+        }catch(error){
+            console.log("Error sending email: ", error);
+            alert("An error occurred while sending the email.");
         }
     };
 </script>
