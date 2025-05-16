@@ -4,7 +4,7 @@
     import axios from 'axios';
 
 
-    const ACCESS_KEY = "543c4711-7969-4d93-9ce3-d582a76282b4";
+    const ACCESS_KEY = "acess_key";
     const apiUrl = `https://api.web3forms.com/submit`;
 
     const name = ref("");
